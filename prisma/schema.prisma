@@ -69,6 +69,7 @@ model Dms {
   senderId     String?
   reciever     String?
   message      String?
+  metadata     Json?
 }
 
 model Post {

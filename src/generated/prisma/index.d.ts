@@ -384,8 +384,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.0
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -6323,6 +6323,7 @@ export namespace Prisma {
     senderId: number
     reciever: number
     message: number
+    metadata: number
     _all: number
   }
 
@@ -6352,6 +6353,7 @@ export namespace Prisma {
     senderId?: true
     reciever?: true
     message?: true
+    metadata?: true
     _all?: true
   }
 
@@ -6434,6 +6436,7 @@ export namespace Prisma {
     senderId: string | null
     reciever: string | null
     message: string | null
+    metadata: JsonValue | null
     _count: DmsCountAggregateOutputType | null
     _min: DmsMinAggregateOutputType | null
     _max: DmsMaxAggregateOutputType | null
@@ -6460,6 +6463,7 @@ export namespace Prisma {
     senderId?: boolean
     reciever?: boolean
     message?: boolean
+    metadata?: boolean
     Automation?: boolean | Dms$AutomationArgs<ExtArgs>
   }, ExtArgs["result"]["dms"]>
 
@@ -6470,6 +6474,7 @@ export namespace Prisma {
     senderId?: boolean
     reciever?: boolean
     message?: boolean
+    metadata?: boolean
     Automation?: boolean | Dms$AutomationArgs<ExtArgs>
   }, ExtArgs["result"]["dms"]>
 
@@ -6480,6 +6485,7 @@ export namespace Prisma {
     senderId?: boolean
     reciever?: boolean
     message?: boolean
+    metadata?: boolean
     Automation?: boolean | Dms$AutomationArgs<ExtArgs>
   }, ExtArgs["result"]["dms"]>
 
@@ -6490,9 +6496,10 @@ export namespace Prisma {
     senderId?: boolean
     reciever?: boolean
     message?: boolean
+    metadata?: boolean
   }
 
-  export type DmsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "automationId" | "createdAt" | "senderId" | "reciever" | "message", ExtArgs["result"]["dms"]>
+  export type DmsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "automationId" | "createdAt" | "senderId" | "reciever" | "message" | "metadata", ExtArgs["result"]["dms"]>
   export type DmsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Automation?: boolean | Dms$AutomationArgs<ExtArgs>
   }
@@ -6515,6 +6522,7 @@ export namespace Prisma {
       senderId: string | null
       reciever: string | null
       message: string | null
+      metadata: Prisma.JsonValue | null
     }, ExtArgs["result"]["dms"]>
     composites: {}
   }
@@ -6945,6 +6953,7 @@ export namespace Prisma {
     readonly senderId: FieldRef<"Dms", 'String'>
     readonly reciever: FieldRef<"Dms", 'String'>
     readonly message: FieldRef<"Dms", 'String'>
+    readonly metadata: FieldRef<"Dms", 'Json'>
   }
     
 
@@ -11760,7 +11769,8 @@ export namespace Prisma {
     createdAt: 'createdAt',
     senderId: 'senderId',
     reciever: 'reciever',
-    message: 'message'
+    message: 'message',
+    metadata: 'metadata'
   };
 
   export type DmsScalarFieldEnum = (typeof DmsScalarFieldEnum)[keyof typeof DmsScalarFieldEnum]
@@ -11817,6 +11827,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -11831,6 +11849,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -11898,6 +11925,20 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -12231,6 +12272,7 @@ export namespace Prisma {
     senderId?: StringNullableFilter<"Dms"> | string | null
     reciever?: StringNullableFilter<"Dms"> | string | null
     message?: StringNullableFilter<"Dms"> | string | null
+    metadata?: JsonNullableFilter<"Dms">
     Automation?: XOR<AutomationNullableScalarRelationFilter, AutomationWhereInput> | null
   }
 
@@ -12241,6 +12283,7 @@ export namespace Prisma {
     senderId?: SortOrderInput | SortOrder
     reciever?: SortOrderInput | SortOrder
     message?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
     Automation?: AutomationOrderByWithRelationInput
   }
 
@@ -12254,6 +12297,7 @@ export namespace Prisma {
     senderId?: StringNullableFilter<"Dms"> | string | null
     reciever?: StringNullableFilter<"Dms"> | string | null
     message?: StringNullableFilter<"Dms"> | string | null
+    metadata?: JsonNullableFilter<"Dms">
     Automation?: XOR<AutomationNullableScalarRelationFilter, AutomationWhereInput> | null
   }, "id">
 
@@ -12264,6 +12308,7 @@ export namespace Prisma {
     senderId?: SortOrderInput | SortOrder
     reciever?: SortOrderInput | SortOrder
     message?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
     _count?: DmsCountOrderByAggregateInput
     _max?: DmsMaxOrderByAggregateInput
     _min?: DmsMinOrderByAggregateInput
@@ -12279,6 +12324,7 @@ export namespace Prisma {
     senderId?: StringNullableWithAggregatesFilter<"Dms"> | string | null
     reciever?: StringNullableWithAggregatesFilter<"Dms"> | string | null
     message?: StringNullableWithAggregatesFilter<"Dms"> | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"Dms">
   }
 
   export type PostWhereInput = {
@@ -12786,6 +12832,7 @@ export namespace Prisma {
     senderId?: string | null
     reciever?: string | null
     message?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     Automation?: AutomationCreateNestedOneWithoutDmsInput
   }
 
@@ -12796,6 +12843,7 @@ export namespace Prisma {
     senderId?: string | null
     reciever?: string | null
     message?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsUpdateInput = {
@@ -12804,6 +12852,7 @@ export namespace Prisma {
     senderId?: NullableStringFieldUpdateOperationsInput | string | null
     reciever?: NullableStringFieldUpdateOperationsInput | string | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     Automation?: AutomationUpdateOneWithoutDmsNestedInput
   }
 
@@ -12814,6 +12863,7 @@ export namespace Prisma {
     senderId?: NullableStringFieldUpdateOperationsInput | string | null
     reciever?: NullableStringFieldUpdateOperationsInput | string | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsCreateManyInput = {
@@ -12823,6 +12873,7 @@ export namespace Prisma {
     senderId?: string | null
     reciever?: string | null
     message?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsUpdateManyMutationInput = {
@@ -12831,6 +12882,7 @@ export namespace Prisma {
     senderId?: NullableStringFieldUpdateOperationsInput | string | null
     reciever?: NullableStringFieldUpdateOperationsInput | string | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsUncheckedUpdateManyInput = {
@@ -12840,6 +12892,7 @@ export namespace Prisma {
     senderId?: NullableStringFieldUpdateOperationsInput | string | null
     reciever?: NullableStringFieldUpdateOperationsInput | string | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PostCreateInput = {
@@ -13459,6 +13512,29 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type AutomationNullableScalarRelationFilter = {
     is?: AutomationWhereInput | null
@@ -13472,6 +13548,7 @@ export namespace Prisma {
     senderId?: SortOrder
     reciever?: SortOrder
     message?: SortOrder
+    metadata?: SortOrder
   }
 
   export type DmsMaxOrderByAggregateInput = {
@@ -13490,6 +13567,32 @@ export namespace Prisma {
     senderId?: SortOrder
     reciever?: SortOrder
     message?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type EnumMEDIATYPEFilter<$PrismaModel = never> = {
@@ -14382,6 +14485,29 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedEnumMEDIATYPEFilter<$PrismaModel = never> = {
     equals?: $Enums.MEDIATYPE | EnumMEDIATYPEFieldRefInput<$PrismaModel>
@@ -14805,6 +14931,7 @@ export namespace Prisma {
     senderId?: string | null
     reciever?: string | null
     message?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsUncheckedCreateWithoutAutomationInput = {
@@ -14813,6 +14940,7 @@ export namespace Prisma {
     senderId?: string | null
     reciever?: string | null
     message?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsCreateOrConnectWithoutAutomationInput = {
@@ -14980,6 +15108,7 @@ export namespace Prisma {
     senderId?: StringNullableFilter<"Dms"> | string | null
     reciever?: StringNullableFilter<"Dms"> | string | null
     message?: StringNullableFilter<"Dms"> | string | null
+    metadata?: JsonNullableFilter<"Dms">
   }
 
   export type UserUpsertWithoutAutomationsInput = {
@@ -15453,6 +15582,7 @@ export namespace Prisma {
     senderId?: string | null
     reciever?: string | null
     message?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type KeywordCreateManyAutomationInput = {
@@ -15505,6 +15635,7 @@ export namespace Prisma {
     senderId?: NullableStringFieldUpdateOperationsInput | string | null
     reciever?: NullableStringFieldUpdateOperationsInput | string | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsUncheckedUpdateWithoutAutomationInput = {
@@ -15513,6 +15644,7 @@ export namespace Prisma {
     senderId?: NullableStringFieldUpdateOperationsInput | string | null
     reciever?: NullableStringFieldUpdateOperationsInput | string | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type DmsUncheckedUpdateManyWithoutAutomationInput = {
@@ -15521,6 +15653,7 @@ export namespace Prisma {
     senderId?: NullableStringFieldUpdateOperationsInput | string | null
     reciever?: NullableStringFieldUpdateOperationsInput | string | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type KeywordUpdateWithoutAutomationInput = {

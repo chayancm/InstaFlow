@@ -74,25 +74,27 @@ export const trackResponses = async (
 
 export const createChatHistory = (
   automationId: string,
-  sender: string,
-  reciever: string,
-  message: string
+  pageId: string, // The page/recipient ID (typically your page ID)
+  senderId: string, // The user's ID
+  message: string,
+  role: "user" | "model" // New role parameter as expected by the webhook
 ) => {
-  return client.automation.update({
-    where: {
-      id: automationId,
-    },
+  return client.dms.create({
     data: {
-      dms: {
-        create: {
-          reciever,
-          senderId: sender,
-          message,
+      Automation: {
+        connect: {
+          id: automationId,
         },
       },
+      senderId: role === "user" ? senderId : pageId,
+      reciever: role === "user" ? pageId : senderId,
+      message,
+      metadata: {
+        role,
+      },
     },
-  })
-}
+  });
+};
 
 export const getKeywordPost = async (postId: string, automationId: string) => {
   return await client.post.findFirst({
@@ -103,25 +105,37 @@ export const getKeywordPost = async (postId: string, automationId: string) => {
   })
 }
 
-export const getChatHistory = async (sender: string, reciever: string) => {
+export const getChatHistory = async (pageId: string, senderId: string) => {
+  // Find all messages between these two entities (page and user)
   const history = await client.dms.findMany({
     where: {
-      AND: [{ senderId: sender }, { reciever }],
+      OR: [
+        { AND: [{ senderId }, { reciever: pageId }] },
+        { AND: [{ senderId: pageId }, { reciever: senderId }] },
+      ],
     },
-    orderBy: { createdAt: 'asc' },
-  })
-  const chatSession: {
-    role: 'assistant' | 'user'
-    content: string
-  }[] = history.map((chat) => {
+    orderBy: { createdAt: "asc" },
+  });
+
+  // Map to the format expected by the webhook
+  const chatSession = history.map((chat: { senderId: string; message: any }) => {
+    // Determine role based on sender/receiver relationship
+    // If senderId matches the user's ID, it's a user message
+    // Otherwise, it's a model/assistant message
+    const role = chat.senderId === senderId ? "user" : "model";
+
     return {
-      role: chat.reciever ? 'assistant' : 'user',
-      content: chat.message!,
-    }
-  })
+      role: role as "user" | "model",
+      content: chat.message || "",
+    };
+  });
+
+  // Get the automationId from the most recent message if available
+  const automationId =
+    history.length > 0 ? history[history.length - 1].automationId : null;
 
   return {
     history: chatSession,
-    automationId: history[history.length - 1].automationId,
-  }
-}
+    automationId,
+  };
+};
