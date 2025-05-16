@@ -115,6 +115,8 @@ export const saveTrigger = async (automationId: string, trigger: string[]) => {
 export const saveKeyword = async (automationId: string, keyword: string) => {
   await onCurrentUser();
   try {
+    console.log("automationId", automationId);
+    console.log("keyword", keyword);
     const create = await addKeyWord(automationId, keyword);
 
     if (create) return { status: 200, data: "Keyword added successfully" };

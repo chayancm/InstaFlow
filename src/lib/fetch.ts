@@ -1,37 +1,58 @@
-import axios from 'axios'
+import axios from "axios";
 
 export const refreshToken = async (token: string) => {
   const refresh_token = await axios.get(
     `${process.env.INSTAGRAM_BASE_URL}/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
-  )
+  );
 
-  return refresh_token.data
-}
+  return refresh_token.data;
+};
 
-export const sendDM = async (
-  userId: string,
-  recieverId: string,
-  prompt: string,
+export async function sendDM(
+  pageId: string,
+  recipientId: string,
+  message: string,
   token: string
-) => {
-  console.log('sending message')
-  return await axios.post(
-    `${process.env.INSTAGRAM_BASE_URL}/v21.0/${userId}/messages`,
-    {
-      recipient: {
-        id: recieverId,
+) {
+  if (!token) {
+    throw new Error("Missing Instagram token");
+  }
+
+  // Validate and clean message
+  const cleanMessage = message.trim();
+  if (!cleanMessage) {
+    throw new Error("Empty message content");
+  }
+
+  try {
+    const response = await axios.post(
+      `https://graph.instagram.com/v22.0/${pageId}/messages`,
+      {
+        recipient: { id: recipientId },
+        message: { text: cleanMessage },
       },
-      message: {
-        text: prompt,
-      },
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error sending DM:", error);
+    // Rethrow with appropriate message
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(
+        `Instagram API Error: ${error.response.status} - ${JSON.stringify(
+          error.response.data
+        )}`
+      );
+    } else {
+      throw error;
     }
-  )
+  }
 }
 
 export const sendPrivateMessage = async (
@@ -40,7 +61,7 @@ export const sendPrivateMessage = async (
   prompt: string,
   token: string
 ) => {
-  console.log('sending message')
+  console.log("sending message");
   return await axios.post(
     `${process.env.INSTAGRAM_BASE_URL}/${userId}/messages`,
     {
@@ -54,40 +75,39 @@ export const sendPrivateMessage = async (
     {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     }
-  )
-}
-
+  );
+};
 
 export const generateTokens = async (code: string) => {
-  const insta_form = new FormData()
-  insta_form.append('client_id', process.env.INSTAGRAM_CLIENT_ID as string)
+  const insta_form = new FormData();
+  insta_form.append("client_id", process.env.INSTAGRAM_CLIENT_ID as string);
 
   insta_form.append(
-    'client_secret',
+    "client_secret",
     process.env.INSTAGRAM_CLIENT_SECRET as string
-  )
-  insta_form.append('grant_type', 'authorization_code')
+  );
+  insta_form.append("grant_type", "authorization_code");
   insta_form.append(
-    'redirect_uri',
+    "redirect_uri",
     `${process.env.NEXT_PUBLIC_HOST_URL}/callback/instagram`
-  )
-  insta_form.append('code', code)
+  );
+  insta_form.append("code", code);
 
   const shortTokenRes = await fetch(process.env.INSTAGRAM_TOKEN_URL as string, {
-    method: 'POST',
+    method: "POST",
     body: insta_form,
-  })
+  });
 
-  const token = await shortTokenRes.json()
+  const token = await shortTokenRes.json();
   if (token.permissions.length > 0) {
-    console.log(token, 'got permissions')
+    console.log(token, "got permissions");
     const long_token = await axios.get(
       `${process.env.INSTAGRAM_BASE_URL}/access_token?grant_type=ig_exchange_token&client_secret=${process.env.INSTAGRAM_CLIENT_SECRET}&access_token=${token.access_token}`
-    )
+    );
 
-    return long_token.data
+    return long_token.data;
   }
-}
+};
