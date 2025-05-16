@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
   const token = req.nextUrl.searchParams.get("hub.verify_token");
   const challenge = req.nextUrl.searchParams.get("hub.challenge");
 
-  // Replace 'YOUR_VERIFY_TOKEN' with the token you configured in Meta Developer Portal
   const verifyToken = process.env.META_WEBHOOK_VERIFY_TOKEN || "testing";
 
   if (mode === "subscribe") {
